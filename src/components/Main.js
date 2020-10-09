@@ -55,9 +55,10 @@ const Main = () => {
           </ListItem>
         </List>
       </Drawer>
-
-      {contacts.length && <ContactsList contacts={contacts} />
+      {
+      contacts.length && <ContactsList contacts={contacts} />
       }
+      <DitailsPopup />
     </>
   );
 };
