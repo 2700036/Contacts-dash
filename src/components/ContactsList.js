@@ -1,6 +1,8 @@
 import React from 'react'
 import { makeStyles, Container, Grid, Toolbar, TextField, } from '@material-ui/core';
 import Contact from './Contact';
+import DitailsPopup from './DitailsPopup';
+import { withRouter } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme)=>({
@@ -12,11 +14,12 @@ const useStyles = makeStyles((theme)=>({
     zIndex: theme.zIndex.modal-1
   } 
 }))
-
-const ContactsList = ({contacts}) => {
+const ContactsList = ({contacts, match, history}) => {
   const classes = useStyles();
-  console.log(contacts)
+  const id = match.params.id;
+  
   return (
+    <>
     <Container >
        <Toolbar />
        <TextField  label="Поиск" fullWidth className={classes.searchInput}/>
@@ -30,9 +33,14 @@ const ContactsList = ({contacts}) => {
 
       </Grid>
     </Container>
+    {id && <DitailsPopup 
+    contact={contacts.find(el=>el.id == id)}
+    handleClose={()=>history.push('/contacts')}
+    />}
+    </>
   )
 }
 
 
 
-export default ContactsList;
+export default withRouter(ContactsList);

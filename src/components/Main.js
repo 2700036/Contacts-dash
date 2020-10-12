@@ -1,21 +1,18 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {
-  Box,
-  CssBaseline,
-  Typography,
+import {Link, Route} from 'react-router-dom'
+import {  
   makeStyles,
   Drawer,
   List,
   ListItem,
   ListItemIcon,
-  ListItemText,
-  Paper,
+  ListItemText,  
   Toolbar,
 } from '@material-ui/core';
 import { JsonPlaceHolderContext } from './JsonPlaceHolderContext';
 import MailIcon from '@material-ui/icons/Mail';
 import ContactsList from './ContactsList';
-import DitailsPopup from './DitailsPopup';
+
 
 const useStyles = makeStyles((theme) => ({
   drawerPaper: {
@@ -48,18 +45,22 @@ const Main = () => {
       >
         <Toolbar />
         <List>
+            <Link to='/contacts'>
           <ListItem button>
             <ListItemIcon>
               <MailIcon />
             </ListItemIcon>
             <ListItemText>Контакты</ListItemText>
           </ListItem>
+            </Link>
         </List>
       </Drawer>
+      <Route path="/contacts/:id?">
       {
       contacts.length && <ContactsList contacts={contacts} />
       }
-      <DitailsPopup />
+      </Route>
+      
     </>
   );
 };

@@ -10,6 +10,8 @@ import {
 } from '@material-ui/core';
 import React, { useState } from 'react';
 
+
+
 const useStyles = makeStyles((theme) => ({
   dialogContent: {
     display: 'flex',
@@ -38,115 +40,115 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DitailsPopup = () => {
+const DitailsPopup = ({contact, handleClose}) => {
   const classes = useStyles();
   const [isEdit, setIsEdit] = useState(false);
+  
+  const {name, email, phone, website, company, 
+    address: { street, suite, city, zipcode }} = contact;
 
   const isReadOnly = () => {
     return !isEdit ? { readOnly: true } : { readOnly: false };
   };
+
   return (
     <>
       <Dialog
         fullWidth={true}
         maxWidth={'sm'}
-        open={true}
-        // onClose={handleClose}
+        open={!!contact}
+        onClose={handleClose}
       >
         <form onSubmit={isEdit ? () => setIsEdit(false) : () => console.log(123)}>
-        <DialogContent className={classes.dialogContent}>
-          <TextField
-            margin='normal'
-            className={`${classes.halfInput} ${classes.mb64}`}
-            label='Имя'
-            defaultValue='Джонатан Стрендж'
-            InputProps={isReadOnly()}
-            required
-          />
-          <Box className={classes.box}>
+          <DialogContent className={classes.dialogContent}>
             <TextField
-              className={classes.halfInput}
-              label='email'
-              type='email'
-              defaultValue='270000@mail.ru'
+              margin='normal'
+              className={`${classes.halfInput} ${classes.mb64}`}
+              label='Имя'
+              defaultValue={name}
               InputProps={isReadOnly()}
+              required
             />
+            <Box className={classes.box}>
+              <TextField
+                className={classes.halfInput}
+                label='email'
+                type='email'
+                defaultValue={email}
+                InputProps={isReadOnly()}
+              />
+              <TextField
+                className={classes.halfInput}
+                label='телефон'
+                type='tel'
+                defaultValue={phone}
+                InputProps={isReadOnly()}
+              />
+            </Box>
+            <Box className={`${classes.box} ${classes.mb64}`}>
+              <TextField
+                className={classes.halfInput}
+                label='Сайт'
+                type='text'
+                defaultValue={website}
+                InputProps={isReadOnly()}
+              />
+              <TextField
+                className={classes.halfInput}
+                label='Компания'
+                type='text'
+                defaultValue={company.name}
+                InputProps={isReadOnly()}
+              />
+            </Box>
+            <Typography paragraph>Адрес:</Typography>
+            <Box className={`${classes.box}`}>
+              <TextField
+                className={classes.halfInput}
+                label='Город'
+                type='text'
+                defaultValue={city}
+                InputProps={isReadOnly()}
+              />
+              <TextField
+                className={classes.halfInput}
+                label='Индекс'
+                type='text'
+                defaultValue={zipcode}
+                InputProps={isReadOnly()}
+              />
+            </Box>
             <TextField
-              className={classes.halfInput}
-              label='телефон'
-              type='tel'
-              defaultValue='+79252700036'
-              InputProps={isReadOnly()}
-            />
-          </Box>
-          <Box className={`${classes.box} ${classes.mb64}`}>
-            <TextField
-              className={classes.halfInput}
-              label='Сайт'
+              className={classes.fullInput}
+              label='Улица, дом, корп.'
               type='text'
-              defaultValue='www.ugreen.com'
+              defaultValue={street}
               InputProps={isReadOnly()}
             />
             <TextField
               className={classes.halfInput}
-              label='Компания'
+              label='Офис, помещение'
               type='text'
-              defaultValue='Кипятильники Джонатана'
+              defaultValue={suite}
               InputProps={isReadOnly()}
             />
-          </Box>
-          <Typography paragraph>Адрес:</Typography>
-          <Box className={`${classes.box}`}>
-            <TextField
-              className={classes.halfInput}
-              label='Город'
-              type='text'
-              defaultValue='Эдинбург'
-              InputProps={isReadOnly()}
-            />
-            <TextField
-              className={classes.halfInput}
-              label='Индекс'
-              type='text'
-              defaultValue='15627898'
-              InputProps={isReadOnly()}
-            />
-          </Box>
-          <TextField
-            className={classes.fullInput}
-            label='Улица, дом, корп.'
-            type='text'
-            defaultValue='Лакки драйв'
-            InputProps={isReadOnly()}
-          />
-          <TextField
-            className={classes.halfInput}
-            label='Офис, помещение'
-            type='text'
-            defaultValue='15а'
-            InputProps={isReadOnly()}
-          />
-          <Box className={`${classes.box}`}></Box>
-        </DialogContent>
-        <DialogActions>
-          {!isEdit && (
-            <Button
-              color='primary'
-              onClick={() => {
-                setIsEdit(true);
-              }}
-            >
-              Изменить
+            <Box className={`${classes.box}`}></Box>
+          </DialogContent>
+          <DialogActions>
+            {!isEdit && (
+              <Button
+                color='primary'
+                onClick={() => {
+                  setIsEdit(true);
+                }}
+              >
+                Изменить
+              </Button>
+            )}
+            <Button color='primary' autoFocus type='submit'>
+              {isEdit ? 'Сохранить' : 'Закрыть'}
             </Button>
-          )}
-          <Button
-            color='primary'
-            autoFocus
-            type="submit"
-          >
-            {isEdit ? 'Сохранить' : 'Закрыть'}
-          </Button>
-        </DialogActions>
+          </DialogActions>
         </form>
       </Dialog>
     </>
