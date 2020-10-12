@@ -4,6 +4,7 @@ import Header from './Header';
 import Main from './Main';
 import '../vendor/normalize.css'
 
+
 const useStyles = makeStyles((theme)=>({
   root: {
     display: 'flex',    
@@ -18,6 +19,7 @@ const App = () => {
     <div className={classes.root}>
     <Header />
     <Main />
+    
     </div>
   );
 };

@@ -15,6 +15,7 @@ import {
 import { JsonPlaceHolderContext } from './JsonPlaceHolderContext';
 import MailIcon from '@material-ui/icons/Mail';
 import ContactsList from './ContactsList';
+import DitailsPopup from './DitailsPopup';
 
 const useStyles = makeStyles((theme) => ({
   drawerPaper: {
