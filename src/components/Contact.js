@@ -43,8 +43,9 @@ const Contact = ({ contact, history }) => {
             тел. <A href={`tel:${contact.website}`}>{contact.phone}</A>
           </Typography>
           <Typography paragraph>
+          {'сайт: '}
             <A target='_blank' href={`https://${contact.website}`}>
-              www.{contact.website}
+              {contact.website}
             </A>
           </Typography>
         </CardContent>

@@ -5,13 +5,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 const useStyles = makeStyles((theme)=>({
 
   menuButton: {
-    marginRight: 'auto',
+    marginLeft: 'auto',
   },
   title: {
     flexGrow: 1
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
+    zIndex: theme.zIndex.drawer + 5,
   },
 }))
 
@@ -21,12 +21,12 @@ export const Header = () => {
     <AppBar position='fixed' className={classes.appBar}>
       <Container fixed>
         <Toolbar>
-          <IconButton  color='inherit' aria-label='menu' className={classes.menuButton}>
+          {/* <IconButton  color='inherit' aria-label='menu' className={classes.menuButton}>
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           {/* <Typography variant='h6' className={classes.title} >Dashboard</Typography>          */}
-            <Button edge='end' color='inherit' variant='outlined'>
-              Log In
+            <Button edge='end' color='inherit' variant='outlined' className={classes.menuButton}>
+              ВОЙТИ
             </Button>        
         </Toolbar>
       </Container>

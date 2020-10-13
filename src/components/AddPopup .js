@@ -40,35 +40,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DitailsPopup = ({ contacts, editContact, match, history }) => {
+const DitailsPopup = ({ addContact, match, history }) => {
   const classes = useStyles();
-  const [isEdit, setIsEdit] = useState(false);
   const { handleSubmit, register, errors } = useForm({
     mode: 'onChange',
   });
-  const open = match.params.action == 'details';
-  const contactId = match.params.id;
-  const contact = contacts.find(({ id }) => id == contactId);
+  const open = match.params.action == 'create';
 
   const handleClose = () => history.push('/contacts/');
 
-  const isReadOnly = () => {
-    return !isEdit ? { readOnly: true } : { readOnly: false };
-  };
   const onSubmit = (data) => {
-    editContact(contactId, data)
+    addContact(data);
     handleClose();
   };
 
-  const { name, email, phone, website, company, street, suite, city, zipcode } = contact;
   return (
     <>
-      <Dialog fullWidth={true} maxWidth={'sm'} 
-      open={!!open} 
-      onClose={handleClose}
-      scroll='body'
-      >
-        <form onSubmit={isEdit ? handleSubmit(onSubmit) : null} noValidate>
+      <Dialog fullWidth={true} maxWidth={'sm'} open={!!open} onClose={handleClose} scroll='body'>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <DialogContent className={classes.dialogContent}>
             <TextField
               inputRef={register({
@@ -86,15 +75,14 @@ const DitailsPopup = ({ contacts, editContact, match, history }) => {
               margin='normal'
               className={`${classes.halfInput} ${classes.mb64}`}
               label='Имя'
-              defaultValue={name}
-              InputProps={isReadOnly()}
               required
               autoComplete='off'
               error={!!errors.name}
               helperText={errors.name ? errors.name.message : null}
             />
             <Box className={classes.box}>
-              <TextField autoComplete='off'
+              <TextField
+                autoComplete='off'
                 inputRef={register({
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -105,12 +93,11 @@ const DitailsPopup = ({ contacts, editContact, match, history }) => {
                 className={classes.halfInput}
                 label='email'
                 type='email'
-                defaultValue={email}
-                InputProps={isReadOnly()}
                 error={!!errors.email}
                 helperText={errors.email ? errors.email.message : null}
               />
-              <TextField autoComplete='off'
+              <TextField
+                autoComplete='off'
                 inputRef={register({
                   minLength: {
                     value: 6,
@@ -125,14 +112,13 @@ const DitailsPopup = ({ contacts, editContact, match, history }) => {
                 className={classes.halfInput}
                 label='телефон'
                 type='tel'
-                defaultValue={phone}
-                InputProps={isReadOnly()}
                 error={!!errors.phone}
                 helperText={errors.phone ? errors.phone.message : null}
               />
             </Box>
             <Box className={`${classes.box} ${classes.mb64}`}>
-              <TextField autoComplete='off'
+              <TextField
+                autoComplete='off'
                 inputRef={register({
                   pattern: {
                     value: /^[\S]+\.[\S]{2,7}$/,
@@ -151,12 +137,11 @@ const DitailsPopup = ({ contacts, editContact, match, history }) => {
                 className={classes.halfInput}
                 label='Сайт'
                 type='text'
-                defaultValue={website}
-                InputProps={isReadOnly()}
                 error={!!errors.website}
                 helperText={errors.website ? errors.website.message : null}
               />
-              <TextField autoComplete='off'
+              <TextField
+                autoComplete='off'
                 inputRef={register({
                   minLength: {
                     value: 2,
@@ -171,15 +156,14 @@ const DitailsPopup = ({ contacts, editContact, match, history }) => {
                 className={classes.halfInput}
                 label='Компания'
                 type='text'
-                defaultValue={company}
-                InputProps={isReadOnly()}
                 error={!!errors.company}
                 helperText={errors.company ? errors.company.message : null}
               />
             </Box>
             <Typography paragraph>Адрес:</Typography>
             <Box className={`${classes.box}`}>
-              <TextField autoComplete='off'
+              <TextField
+                autoComplete='off'
                 inputRef={register({
                   minLength: {
                     value: 2,
@@ -194,12 +178,11 @@ const DitailsPopup = ({ contacts, editContact, match, history }) => {
                 className={classes.halfInput}
                 label='Город'
                 type='text'
-                defaultValue={city}
-                InputProps={isReadOnly()}
                 error={!!errors.city}
                 helperText={errors.city ? errors.city.message : null}
               />
-              <TextField autoComplete='off'
+              <TextField
+                autoComplete='off'
                 inputRef={register({
                   pattern: {
                     value: /^[\d-]+$/,
@@ -218,13 +201,12 @@ const DitailsPopup = ({ contacts, editContact, match, history }) => {
                 className={classes.halfInput}
                 label='Индекс'
                 type='text'
-                defaultValue={zipcode}
-                InputProps={isReadOnly()}
                 error={!!errors.zipcode}
                 helperText={errors.zipcode ? errors.zipcode.message : null}
               />
             </Box>
-            <TextField autoComplete='off'
+            <TextField
+              autoComplete='off'
               inputRef={register({
                 minLength: {
                   value: 2,
@@ -239,12 +221,11 @@ const DitailsPopup = ({ contacts, editContact, match, history }) => {
               className={classes.fullInput}
               label='Улица, дом, корп.'
               type='text'
-              defaultValue={street}
-              InputProps={isReadOnly()}
               error={!!errors.street}
               helperText={errors.street ? errors.street.message : null}
             />
-            <TextField autoComplete='off'
+            <TextField
+              autoComplete='off'
               inputRef={register({
                 maxLength: {
                   value: 15,
@@ -255,27 +236,21 @@ const DitailsPopup = ({ contacts, editContact, match, history }) => {
               className={classes.halfInput}
               label='Офис, помещение'
               type='text'
-              defaultValue={suite}
-              InputProps={isReadOnly()}
               error={!!errors.suite}
               helperText={errors.suite ? errors.suite.message : null}
             />
             <Box className={`${classes.box}`}></Box>
           </DialogContent>
           <DialogActions>
-            {!isEdit && (
-              <Button
-                color='secondary'
-                onClick={() => {
-                  setIsEdit(true);
-                }}
-              >
-                Изменить
-              </Button>
-            )}
-            <Button color='primary' type='submit' autoFocus onClick={isEdit ? null : handleClose}>
-              {isEdit ? 'Сохранить' : 'Закрыть'}
+            <Button color='primary' type='submit' autoFocus >
+              Сохранить
             </Button>
+            <Button
+                color='secondary'
+                onClick={handleClose}
+              >
+                Закрыть
+              </Button>            
           </DialogActions>
         </form>
       </Dialog>
