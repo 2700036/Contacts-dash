@@ -18,16 +18,31 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: 200,
   },
-
   drawer: {
     width: 200,
   },
+  listItem: {
+    textDecoration: 'none',
+    color: 'inherit',
+  }
 }));
 
 const Main = () => {
   const classes = useStyles();
   const jsonPlaceHolderApi = useContext(JsonPlaceHolderContext);
   const [contacts, setContacts] = useState([]);
+
+  const handleDeleteContact = (contactId) => {
+    const contactIdx = contacts.findIndex(({id})=>contactId == id);
+    setContacts([...contacts.slice(0, contactIdx), ...contacts.slice(contactIdx+1, )])
+  }
+  const handleEditContact = (contactId, data) => {
+    const contactIdx = contacts.findIndex(({id})=>contactId == id);
+    const contact = contacts.find(({id})=>contactId == id);
+    const newContact = {...contact, ...data};    
+    setContacts([...contacts.slice(0, contactIdx), newContact, ...contacts.slice(contactIdx+1, )])
+  }
+
 
   useEffect(()=>{
     jsonPlaceHolderApi.getUsers()
@@ -45,19 +60,23 @@ const Main = () => {
       >
         <Toolbar />
         <List>
-            <Link to='/contacts'>
+            <Link to='/contacts/' className={classes.listItem}>
           <ListItem button>
             <ListItemIcon>
               <MailIcon />
             </ListItemIcon>
-            <ListItemText>Контакты</ListItemText>
+            <ListItemText >Контакты</ListItemText>
           </ListItem>
             </Link>
         </List>
       </Drawer>
-      <Route path="/contacts/:id?">
+      <Route path="/contacts/:action?/:id?">
       {
-      contacts.length && <ContactsList contacts={contacts} />
+      contacts.length && <ContactsList 
+      contacts={contacts} 
+      deleteContact={handleDeleteContact}
+      editContact={handleEditContact}
+      />
       }
       </Route>
       

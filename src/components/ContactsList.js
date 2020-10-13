@@ -3,6 +3,7 @@ import { makeStyles, Container, Grid, Toolbar, TextField, } from '@material-ui/c
 import Contact from './Contact';
 import DitailsPopup from './DitailsPopup';
 import { withRouter } from 'react-router-dom';
+import DeletePopup from './DeletePopup';
 
 
 const useStyles = makeStyles((theme)=>({
@@ -11,12 +12,12 @@ const useStyles = makeStyles((theme)=>({
   searchInput: {   
     marginTop: theme.spacing(2), 
     marginBottom: theme.spacing(5), 
-    zIndex: theme.zIndex.modal-1
+    zIndex: theme.zIndex.drawer
   } 
 }))
-const ContactsList = ({contacts, match, history}) => {
+const ContactsList = ({contacts, deleteContact, editContact, match, history}) => {
   const classes = useStyles();
-  const id = match.params.id;
+  const action = match.params.action;
   
   return (
     <>
@@ -27,15 +28,19 @@ const ContactsList = ({contacts, match, history}) => {
         {contacts.map((contact, i)=>{
           return <Contact 
           key={contact.id} 
-          contact={contact}
+          contact={contact}          
           />
         })}
 
       </Grid>
     </Container>
-    {id && <DitailsPopup 
-    contact={contacts.find(el=>el.id == id)}
-    handleClose={()=>history.push('/contacts')}
+    {action && <DitailsPopup 
+    contacts={contacts} 
+    editContact={editContact}   
+    />}
+    {action && <DeletePopup 
+    contacts={contacts}
+    deleteContact={deleteContact}
     />}
     </>
   )
