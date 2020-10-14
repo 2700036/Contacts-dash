@@ -123,9 +123,9 @@ const Register = ({history, setInfoPopupData, closeInfoPopup}) => {
             Отправить
           </Button>
           <Box className={classes.box}>
-            <Typography >Уже зарегистрированы?</Typography>
-            <Link to='/signin' style={{ textDecoration: 'none' }}>
-            <Typography color='primary' >Войти</Typography>
+            <Typography style={{ margin: 'auto'}} >Уже зарегистрированы?</Typography>
+            <Link to='/signin' style={{ textDecoration: 'none', margin: 'auto' }}>
+            <Typography  color='primary' >Войти</Typography>
             </Link>
             
           </Box>

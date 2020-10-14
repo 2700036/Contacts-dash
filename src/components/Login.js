@@ -102,8 +102,8 @@ const Login = ({ history, handleLogin, setInfoPopupData }) => {
             Войти
           </Button>
           <Box className={classes.box}>
-            <Typography>Не зарегистрированы?</Typography>
-            <Link to='/signup' style={{ textDecoration: 'none' }}>
+            <Typography style={{ margin: 'auto'}}>Не зарегистрированы?</Typography>
+            <Link to='/signup' style={{ textDecoration: 'none', margin: 'auto' }}>
               <Typography color='primary'>Регистрация</Typography>
             </Link>
           </Box>
