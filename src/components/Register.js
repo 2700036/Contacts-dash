@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Register = ({history}) => {
+const Register = ({history, setInfoPopupData, closeInfoPopup}) => {
   const classes = useStyles();
   const { handleSubmit, register, errors, watch } = useForm({
     mode: 'onChange',
@@ -44,11 +44,17 @@ const Register = ({history}) => {
     auth
     .register(email, password)
     .then((res) => {
-      if (res.email) { 
+      
+      if (res.data) { 
+        setInfoPopupData("registered")
+        setTimeout(() => {
+          closeInfoPopup()
+          history.push("/signin");
+        }, 2000)
         
-        history.push("/signin");
       } else {
-        console.log(res.error);
+        setInfoPopupData(res.error)
+        console.log(res);
       }
     });
   };
@@ -57,11 +63,11 @@ const Register = ({history}) => {
   return (
     <>
       <Container className={classes.container} maxWidth='xs'>
-        <Typography variant='h6' style={{ marginBottom: 40 }}>
+        <Typography variant='h5' style={{ marginBottom: 40 }}>
           Регистриция
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-          <TextField
+          <TextField autoFocus
             autoComplete='off'
             inputRef={register({
               required: 'Это обязательное поле',

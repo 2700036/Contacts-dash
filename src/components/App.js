@@ -7,6 +7,7 @@ import * as auth from '../auth';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
+import InfoPopup from './InfoPopup';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,7 +19,11 @@ const App = () => {
   const classes = useStyles();
   const [loggedIn, setLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState(null);
+  const [infoPopupData, setInfoPopupData] = useState(false)
   const history = useHistory();
+  const closeInfoPopup = () => {
+    setInfoPopupData(false)
+  }
   const handleLogin = (email) => {
     setUserEmail(email);
     setLoggedIn(true);    
@@ -47,16 +52,28 @@ const App = () => {
       />      
       <Switch>
         <Route path='/signin'>
-          <Login handleLogin={handleLogin}/>
+          <Login 
+          handleLogin={handleLogin}
+          setInfoPopupData={setInfoPopupData}          
+          />
         </Route>
         <Route  path='/signup'>
-          <Register />
+          <Register 
+          setInfoPopupData={setInfoPopupData}
+          closeInfoPopup={closeInfoPopup}
+          />
         </Route>        
           <Main 
           path='/'
           loggedIn={loggedIn}
           />        
       </Switch>
+      {infoPopupData && 
+      <InfoPopup 
+      infoPopupData={infoPopupData}
+      closeInfoPopup={closeInfoPopup}
+      />
+      }
     </div>
   );
 };

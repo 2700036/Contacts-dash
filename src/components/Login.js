@@ -31,12 +31,16 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
   },
 }));
+  const mapErrCodeToMessage = {
+    401: 'Неверный логин или пароль'
+  }
 
-const Login = ({ history, handleLogin }) => {
+const Login = ({ history, handleLogin, setInfoPopupData }) => {
   const classes = useStyles();
   const { handleSubmit, register, errors } = useForm({
     mode: 'onChange',
   });
+
   const onSubmit = ({ email, password }) => {    
     auth
       .authorize(email, password)
@@ -46,17 +50,20 @@ const Login = ({ history, handleLogin }) => {
           history.push('/');
         } 
       })
-      .catch((err) => console.log(err.error));
+      .catch((err) => {
+        setInfoPopupData(mapErrCodeToMessage[err.error])
+        console.log(err)
+      });
   };
 
   return (
     <>
       <Container className={classes.container} maxWidth='xs'>
-        <Typography variant='h6' style={{ marginBottom: 40 }}>
-          Авторизуйтесь
+        <Typography variant='h5' style={{ marginBottom: 40 }}>
+          Авторизация
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-          <TextField
+          <TextField autoFocus
             autoComplete='off'
             inputRef={register({
               required: 'Это обязательное поле',

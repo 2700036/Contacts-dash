@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme)=>({
   searchBox: {
     position: "relative",
   },
-  closeButton: {
+  clearButton: {
     position: 'absolute',
     right: '-10px',
     top: '50%',
@@ -68,7 +68,7 @@ const ContactsList = ({contacts, deleteContact, editContact, addContact, match, 
        value={searchWord}
        onChange={e=>setSearchWord(e.target.value)}
        />
-       <IconButton aria-label="close" className={classes.closeButton} onClick={()=> setSearchWord('') }>
+       <IconButton aria-label="close" className={classes.clearButton} onClick={()=> setSearchWord('') }>
        <CloseIcon />
         </IconButton>
         </Box>
