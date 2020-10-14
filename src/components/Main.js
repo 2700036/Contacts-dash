@@ -12,6 +12,7 @@ import {
 import { JsonPlaceHolderContext } from './JsonPlaceHolderContext';
 import MailIcon from '@material-ui/icons/Mail';
 import ContactsList from './ContactsList';
+import withProtectedRoute from './hocs/withProtectedRoute';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -95,4 +96,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default withProtectedRoute(Main);

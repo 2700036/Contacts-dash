@@ -243,7 +243,7 @@ const DitailsPopup = ({ addContact, match, history }) => {
           </DialogContent>
           <DialogActions>
             <Button color='primary' type='submit' autoFocus >
-              Сохранить
+              Добавить
             </Button>
             <Button
                 color='secondary'
