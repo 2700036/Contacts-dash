@@ -13,9 +13,8 @@ const useStyles = makeStyles((theme)=>({
   }, 
   
 }))
-const Dashboard = ({contacts, deleteContact, editContact, addContact, match, history}) => {
-  const classes = useStyles();
-  
+const Dashboard = () => {
+  const classes = useStyles(); 
   
   return (
     
