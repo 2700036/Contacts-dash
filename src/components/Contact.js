@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   deleteButton: {
     marginRight: 'auto',
   },
+  detailsButton: {
+    marginRight: theme.spacing(1)
+  }
 }));
 
 const Contact = ({ contact, history }) => {

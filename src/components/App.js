@@ -61,6 +61,7 @@ const App = () => {
           <Register 
           setInfoPopupData={setInfoPopupData}
           closeInfoPopup={closeInfoPopup}
+          handleLogin={handleLogin}
           />
         </Route>        
           <Main 

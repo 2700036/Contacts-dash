@@ -13,6 +13,7 @@ import { JsonPlaceHolderContext } from './JsonPlaceHolderContext';
 import MailIcon from '@material-ui/icons/Mail';
 import ContactsList from './ContactsList';
 import withProtectedRoute from './hocs/withProtectedRoute';
+import Dashboard from './Dashboard';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -81,6 +82,9 @@ const Main = () => {
             </Link>
         </List>
       </Drawer>
+      <Route exact path="/">
+        <Dashboard />
+      </Route>
       <Route path="/contacts/:action?/:id?">
       {
       contacts.length && <ContactsList 

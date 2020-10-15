@@ -2,8 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { makeStyles, Container, TextField, Typography, Button, Box } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import { Link, withRouter } from 'react-router-dom';
-import { Link as A } from '@material-ui/core';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import * as auth from '../auth';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -32,13 +37,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Register = ({history, setInfoPopupData, closeInfoPopup}) => {
+const Register = ({history, setInfoPopupData, closeInfoPopup, handleLogin}) => {
   const classes = useStyles();
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
   const { handleSubmit, register, errors, watch } = useForm({
     mode: 'onChange',
   }); 
   const password = useRef({});
   password.current = watch("password", "");
+
+  const fakeLogin = () => {
+    auth.authorize('user@test.com', '123123123')
+    .then((data) => {              
+      if (data.token) {
+        handleLogin('user@test.com');
+        history.push('/');
+      } 
+    })    
+  }
 
   const onSubmit = ({email, password}) => {    
     auth
@@ -58,6 +74,13 @@ const Register = ({history, setInfoPopupData, closeInfoPopup}) => {
       }
     });
   };
+
+  useEffect(()=>{
+    setTimeout(() => {
+      setIsSnackbarOpen(true)
+    }, 3000)
+    
+  }, [])
 
 
   return (
@@ -130,6 +153,13 @@ const Register = ({history, setInfoPopupData, closeInfoPopup}) => {
             
           </Box>
         </form>
+        <Snackbar open={isSnackbarOpen} autoHideDuration={6000} onClose={()=>setIsSnackbarOpen(false)}>
+          <Button style={{textTransform: 'none'}} onClick={fakeLogin}>
+        <Alert  severity="success">
+          Пропустить регистрацию !
+        </Alert>
+          </Button>
+      </Snackbar>
       </Container>
     </>
   );
