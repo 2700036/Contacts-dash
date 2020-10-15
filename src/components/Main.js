@@ -87,7 +87,7 @@ const Main = () => {
       </Route>
       <Route path="/contacts/:action?/:id?">
       {
-      contacts.length && <ContactsList 
+      contacts && <ContactsList 
       contacts={contacts} 
       deleteContact={handleDeleteContact}
       editContact={handleEditContact}
