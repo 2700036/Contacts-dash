@@ -6,14 +6,11 @@ import jsonPlaceHolderApi from './services/JsonPlaceHolderApi';
 import { JsonPlaceHolderContext } from './components/JsonPlaceHolderContext';
 
 ReactDOM.render(
-  // <React.StrictMode>
-     <JsonPlaceHolderContext.Provider value={jsonPlaceHolderApi}>
-      <Router >
-        <App />
-      </Router>
-    </JsonPlaceHolderContext.Provider>
-  // </React.StrictMode>
-  ,
+  <JsonPlaceHolderContext.Provider value={jsonPlaceHolderApi}>
+    <Router>
+      <App />
+    </Router>
+  </JsonPlaceHolderContext.Provider>,
+
   document.getElementById('root')
 );
-
