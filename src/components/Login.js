@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles, Container, TextField, Typography, Button, Box } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import { Link, withRouter } from 'react-router-dom';
-import { Link as A } from '@material-ui/core';
 import * as auth from '../auth';
 
 const useStyles = makeStyles((theme) => ({

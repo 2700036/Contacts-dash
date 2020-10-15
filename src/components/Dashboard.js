@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { makeStyles, Container, Toolbar, Box, Typography} from '@material-ui/core';
-import Contact from './Contact';
+import React from 'react'
+import { makeStyles, Container, Typography} from '@material-ui/core';
+
 
 
 const useStyles = makeStyles((theme)=>({

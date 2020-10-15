@@ -1,15 +1,6 @@
-import React, { Component } from 'react';
-import {
-  AppBar,
-  Box,
-  Button,
-  Container,
-  IconButton,
-  makeStyles,
-  Toolbar,
-  Typography,
-} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import React from 'react';
+import { AppBar, Button, Container, makeStyles, Toolbar, Typography } from '@material-ui/core';
+
 import { Route, withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -29,8 +20,8 @@ export const Header = ({ userEmail, setLoggedIn, loggedIn, history }) => {
   const handleLogout = () => {
     setLoggedIn(false);
     localStorage.removeItem('jwt');
-    history.push('/signin')
-  }
+    history.push('/signin');
+  };
   return (
     <AppBar position='fixed' className={classes.appBar}>
       <Container fixed>
@@ -41,25 +32,34 @@ export const Header = ({ userEmail, setLoggedIn, loggedIn, history }) => {
             </Typography>
           )}
           {loggedIn && (
-            <Button edge='end' color='inherit' variant='outlined' 
-            className={classes.menuButton}
-            onClick={handleLogout}
+            <Button
+              edge='end'
+              color='inherit'
+              variant='outlined'
+              className={classes.menuButton}
+              onClick={handleLogout}
             >
               ВЫЙТИ
             </Button>
           )}
           <Route path='/signin'>
-          <Button edge='end' color='inherit' variant='outlined' 
-            className={classes.menuButton}
-            onClick={()=>history.push('/signup')}
+            <Button
+              edge='end'
+              color='inherit'
+              variant='outlined'
+              className={classes.menuButton}
+              onClick={() => history.push('/signup')}
             >
               РЕГИСТРАЦИЯ
             </Button>
           </Route>
           <Route path='/signup'>
-          <Button edge='end' color='inherit' variant='outlined' 
-            className={classes.menuButton}
-            onClick={()=>history.push('/signin')}
+            <Button
+              edge='end'
+              color='inherit'
+              variant='outlined'
+              className={classes.menuButton}
+              onClick={() => history.push('/signin')}
             >
               ВОЙТИ
             </Button>
