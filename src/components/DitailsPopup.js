@@ -114,7 +114,7 @@ const DitailsPopup = ({ contacts, editContact, match, history }) => {
                 inputRef={register({
                   minLength: {
                     value: 6,
-                    message: 'Не менее 2 символов',
+                    message: 'Не менее 6 символов',
                   },
                   maxLength: {
                     value: 30,
