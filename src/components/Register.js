@@ -87,7 +87,7 @@ const Register = ({history, setInfoPopupData, closeInfoPopup, handleLogin}) => {
     <>
       <Container className={classes.container} maxWidth='xs'>
         <Typography variant='h5' style={{ marginBottom: 40 }}>
-          Регистриция
+          Регистрация
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <TextField autoFocus
