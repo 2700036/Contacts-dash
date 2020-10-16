@@ -81,6 +81,7 @@ const Login = ({ history, handleLogin, setInfoPopupData }) => {
           <TextField
             autoComplete='off'
             inputRef={register({
+              required: 'Это обязательное поле',
               minLength: {
                 value: 8,
                 message: 'Не менее 8 символов',
