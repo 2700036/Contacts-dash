@@ -11,6 +11,8 @@ import {
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { connect } from 'react-redux';
+import { editContact } from '../actions';
 
 const useStyles = makeStyles((theme) => ({
   dialogContent: {
@@ -56,7 +58,7 @@ const DitailsPopup = ({ contacts, editContact, match, history }) => {
     return !isEdit ? { readOnly: true } : { readOnly: false };
   };
   const onSubmit = (data) => {
-    editContact(contactId, data)
+    editContact({id: contactId, ...data})
     handleClose();
   };
 
@@ -283,4 +285,13 @@ const DitailsPopup = ({ contacts, editContact, match, history }) => {
   );
 };
 
-export default withRouter(DitailsPopup);
+const mapStateToProps = ({contacts}) => ({
+  contacts
+})
+
+const mapDispatchToProps = {
+  editContact
+}
+
+
+export default withRouter( connect(mapStateToProps, mapDispatchToProps)(DitailsPopup));

@@ -11,6 +11,8 @@ import {
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { connect } from 'react-redux';
+import { addContact } from '../actions';
 
 const useStyles = makeStyles((theme) => ({
   dialogContent: {
@@ -258,4 +260,13 @@ const DitailsPopup = ({ addContact, match, history }) => {
   );
 };
 
-export default withRouter(DitailsPopup);
+const mapStateToProps = (state) => ({
+  
+})
+
+const mapDispatchToProps = {
+  addContact
+}
+
+
+export default withRouter( connect(mapStateToProps, mapDispatchToProps)(DitailsPopup));

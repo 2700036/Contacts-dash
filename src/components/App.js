@@ -8,6 +8,7 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
 import InfoPopup from './InfoPopup';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,5 +79,14 @@ const App = () => {
     </div>
   );
 };
+
+// const mapStateToProps = (state) => ({
+  
+// })
+
+// const mapDispatchToProps = {
+  
+// }
+
 
 export default App;

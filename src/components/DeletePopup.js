@@ -7,21 +7,21 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { deleteContact } from '../actions';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const DeletePopup = ({match, deleteContact, history, contacts}) => {
-  
+const DeletePopup = ({match, history, deleteContact}) => {  
   const open = match.params.action == 'delete';  
-
   const handleClose = () => history.push('/contacts/');
   const handleDelete = ()=>{
     deleteContact(match.params.id);
     handleClose()
   }
-
+  
   return (
     <>      
       <Dialog
@@ -49,6 +49,15 @@ const DeletePopup = ({match, deleteContact, history, contacts}) => {
       </Dialog>
     </>
   );
+};
+
+const mapStateToProps = (state) => ({
+  
+})
+
+const mapDispatchToProps = {
+  deleteContact
 }
 
-export default withRouter(DeletePopup);
+
+export default withRouter( connect(mapStateToProps, mapDispatchToProps)(DeletePopup) );

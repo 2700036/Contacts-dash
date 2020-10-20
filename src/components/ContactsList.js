@@ -8,6 +8,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import AddPopup from './AddPopup ';
+import { connect } from 'react-redux';
+
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -83,11 +85,18 @@ const ContactsList = ({ contacts, deleteContact, editContact, addContact, match,
           <AddIcon />
         </Fab>
       </Container>
-      {action == 'details' && <DitailsPopup contacts={contacts} editContact={editContact} />}
-      {action == 'delete' && <DeletePopup contacts={contacts} deleteContact={deleteContact} />}
-      {action == 'create' && <AddPopup addContact={addContact} />}
+      {action == 'details' && <DitailsPopup />}
+      {action == 'delete' && <DeletePopup />}
+      {action == 'create' && <AddPopup />}
     </>
   );
 };
 
-export default withRouter(ContactsList);
+const mapStateToProps = ({contacts}) => ({
+  contacts
+})
+
+
+
+
+export default withRouter(connect(mapStateToProps)(ContactsList));

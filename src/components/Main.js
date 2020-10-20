@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Link, Route} from 'react-router-dom'
 import {  
   makeStyles,
@@ -14,6 +14,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import ContactsList from './ContactsList';
 import withProtectedRoute from './hocs/withProtectedRoute';
 import Dashboard from './Dashboard';
+import { contactsLoaded } from '../actions';
+import { connect } from 'react-redux';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,25 +38,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Main = () => {
+const Main = ({contacts, setContacts}) => {
   const classes = useStyles();
   const jsonPlaceHolderApi = useContext(JsonPlaceHolderContext);
-  const [contacts, setContacts] = useState([]);
-
-  const handleDeleteContact = (contactId) => {
-    const contactIdx = contacts.findIndex(({id})=>contactId == id);
-    setContacts([...contacts.slice(0, contactIdx), ...contacts.slice(contactIdx+1, )])
-  }
-  const handleEditContact = (contactId, data) => {
-    const contactIdx = contacts.findIndex(({id})=>contactId == id);
-    const contact = contacts.find(({id})=>contactId == id);
-    const newContact = {...contact, ...data};    
-    setContacts([...contacts.slice(0, contactIdx), newContact, ...contacts.slice(contactIdx+1, )])
-  };
-  const handleAddContact = (data) => {
-    setContacts([{id: contacts.length+1, ...data}, ...contacts])
-  }
-
 
   useEffect(()=>{
     jsonPlaceHolderApi.getUsers()
@@ -87,17 +73,21 @@ const Main = () => {
       </Route>
       <Route path="/contacts/:action?/:id?">
       {
-      contacts && <ContactsList 
-      contacts={contacts} 
-      deleteContact={handleDeleteContact}
-      editContact={handleEditContact}
-      addContact={handleAddContact}
-      />
+      contacts && <ContactsList />
       }
       </Route>
       
     </>
-  );
+  );  
 };
 
-export default withProtectedRoute(Main);
+const mapStateToProps = ({contacts}) => ({
+  contacts
+})
+
+const mapDispatchToProps = {
+  setContacts: contactsLoaded
+}
+
+export default withProtectedRoute(connect(mapStateToProps, mapDispatchToProps)(Main));
+
