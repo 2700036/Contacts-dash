@@ -5,6 +5,8 @@ import { Link, withRouter } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import * as auth from '../auth';
+import {useDispatch} from "react-redux";
+import {setInfoPopupData, closeInfoPopup} from '../actions';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -37,8 +39,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Register = ({history, setInfoPopupData, closeInfoPopup, handleLogin}) => {
+const Register = ({history, handleLogin}) => {
   const classes = useStyles();
+  const dispatch = useDispatch()
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
   const { handleSubmit, register, errors, watch } = useForm({
     mode: 'onChange',
@@ -62,14 +65,14 @@ const Register = ({history, setInfoPopupData, closeInfoPopup, handleLogin}) => {
     .then((res) => {
       
       if (res.data) { 
-        setInfoPopupData("registered")
+        dispatch(setInfoPopupData("registered"))
         setTimeout(() => {
-          closeInfoPopup()
+          dispatch(closeInfoPopup())
           history.push("/signin");
         }, 2000)
         
       } else {
-        setInfoPopupData(res.error)
+        dispatch(setInfoPopupData(res.error))
         console.log(res);
       }
     });

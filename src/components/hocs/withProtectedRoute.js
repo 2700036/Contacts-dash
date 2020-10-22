@@ -1,10 +1,12 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+import {useSelector} from "react-redux";
 // import Spinner from "../Spinner/Spinner";
 
 
 export default (Wrapped) => {
-  return ({path, loggedIn, ...props }) => {
+  return ({path, ...props }) => {    
+const loggedIn = useSelector(state => state.loggedIn)
     return <Route path={path}>
   {loggedIn ? <Wrapped {...props} /> : <Redirect to='/signin'/>} 
   </Route>

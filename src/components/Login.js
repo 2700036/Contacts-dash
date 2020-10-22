@@ -3,6 +3,8 @@ import { makeStyles, Container, TextField, Typography, Button, Box } from '@mate
 import { useForm } from 'react-hook-form';
 import { Link, withRouter } from 'react-router-dom';
 import * as auth from '../auth';
+import {useDispatch} from "react-redux";
+import {setInfoPopupData} from '../actions';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -34,8 +36,10 @@ const useStyles = makeStyles((theme) => ({
     401: 'Неверный логин или пароль'
   }
 
-const Login = ({ history, handleLogin, setInfoPopupData }) => {
+const Login = ({ history, handleLogin }) => {
   const classes = useStyles();
+  const dispatch = useDispatch()
+
   const { handleSubmit, register, errors } = useForm({
     mode: 'onChange',
   });
@@ -50,7 +54,7 @@ const Login = ({ history, handleLogin, setInfoPopupData }) => {
         } 
       })
       .catch((err) => {
-        setInfoPopupData(mapErrCodeToMessage[err.error])
+        dispatch(setInfoPopupData(mapErrCodeToMessage[err.error]))
         console.log(err)
       });
   };

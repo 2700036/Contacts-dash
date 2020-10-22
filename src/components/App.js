@@ -9,7 +9,7 @@ import Login from './Login';
 import Register from './Register';
 import InfoPopup from './InfoPopup';
 import { connect } from 'react-redux';
-import {login} from '../actions';
+import { login, updateUserEmail, setInfoPopupData } from '../actions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,75 +17,50 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const App = ({loggedIn, login}) => {
+const App = ({ loggedIn, userEmail, handleLogin, infoPopupData }) => {
   const classes = useStyles();
-  
-  const [userEmail, setUserEmail] = useState(null);
-  const [infoPopupData, setInfoPopupData] = useState(false)
   const history = useHistory();
-  const closeInfoPopup = () => {
-    setInfoPopupData(false)
-  }
-  const handleLogin = (email) => {
-    setUserEmail(email);
-    login();    
-  }
-
   const handleTokenCheck = () => {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {      
-      auth.checkToken(jwt)
-      .then((res) => { 
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      auth.checkToken(jwt).then((res) => {
         handleLogin(res.data.email);
         history.push('/');
-      })
-    };
-}
-  useEffect(()=>{
+      });
+    }
+  };
+  useEffect(() => {
     handleTokenCheck();
-  }, [loggedIn])
+  }, [loggedIn]);
 
   return (
     <div className={classes.root}>
-      <Header 
-      userEmail={userEmail}      
-      />      
+      <Header userEmail={userEmail} />
       <Switch>
         <Route path='/signin'>
-          <Login 
-          handleLogin={handleLogin}
-          setInfoPopupData={setInfoPopupData}          
-          />
+          <Login handleLogin={handleLogin} />
         </Route>
-        <Route  path='/signup'>
-          <Register 
-          setInfoPopupData={setInfoPopupData}
-          closeInfoPopup={closeInfoPopup}
-          handleLogin={handleLogin}
-          />
-        </Route>        
-          <Main 
-          path='/'
-          loggedIn={loggedIn}
-          />        
+        <Route path='/signup'>
+          <Register handleLogin={handleLogin} />
+        </Route>
+        <Main path='/' />
       </Switch>
-      {infoPopupData && 
-      <InfoPopup 
-      infoPopupData={infoPopupData}
-      closeInfoPopup={closeInfoPopup}
-      />
-      }
+      {infoPopupData && <InfoPopup />}
     </div>
   );
 };
 
-const mapStateToProps = ({loggedIn}) => ({
-  loggedIn
-})
+const mapStateToProps = ({ loggedIn, userEmail, infoPopupData }) => ({
+  loggedIn,
+  userEmail,
+  infoPopupData,
+});
 
-const mapDispatchToProps = {
-  login 
-}
-
+const mapDispatchToProps = (dispatch) => ({
+  handleLogin: (email) => {
+    dispatch(updateUserEmail(email));
+    dispatch(login());
+  },
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

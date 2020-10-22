@@ -10,6 +10,10 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Slide from '@material-ui/core/Slide';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import green from '@material-ui/core/colors/green';
+import {useDispatch, useSelector} from "react-redux";
+import {closeInfoPopup} from '../actions';
+
+
 const useStyles = makeStyles(theme=>({
   content: {
     display: 'flex',
@@ -35,15 +39,18 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
 });
 
-const InfoPopup = ({ infoPopupData, closeInfoPopup }) => {
+const InfoPopup = () => {
   const classes = useStyles();
+  const infoPopupData = useSelector(state=>state.infoPopupData)
+  const dispatch = useDispatch();
+  const onClose = ()=>dispatch(closeInfoPopup())
   return (
     <>
       <Dialog
         open={!!infoPopupData}
         TransitionComponent={Transition}
         keepMounted
-        onClose={closeInfoPopup}
+        onClose={onClose}
         aria-labelledby='alert-dialog-slide-title'
         aria-describedby='alert-dialog-slide-description'
       >
@@ -64,7 +71,7 @@ const InfoPopup = ({ infoPopupData, closeInfoPopup }) => {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeInfoPopup} color='primary' autoFocus>
+          <Button onClick={onClose} color='primary' autoFocus>
             Закрыть
           </Button>
         </DialogActions>
