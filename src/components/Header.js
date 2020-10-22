@@ -2,6 +2,8 @@ import React from 'react';
 import { AppBar, Button, Container, makeStyles, Toolbar, Typography } from '@material-ui/core';
 
 import { Route, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import {logout} from '../actions';
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
@@ -15,10 +17,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Header = ({ userEmail, setLoggedIn, loggedIn, history }) => {
+export const Header = ({ userEmail, logout, loggedIn, history }) => {
   const classes = useStyles();
   const handleLogout = () => {
-    setLoggedIn(false);
+    logout();
     localStorage.removeItem('jwt');
     history.push('/signin');
   };
@@ -70,4 +72,13 @@ export const Header = ({ userEmail, setLoggedIn, loggedIn, history }) => {
   );
 };
 
-export default withRouter(Header);
+const mapStateToProps = ({loggedIn}) => ({
+  loggedIn
+})
+
+const mapDispatchToProps = {  
+  logout
+}
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

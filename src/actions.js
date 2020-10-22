@@ -14,4 +14,10 @@ export const deleteContact = payload => ({
   type: "DELETE_CONTACT",
   payload
 });
+export const login = () => ({
+  type: "LOGIN"
+});
+export const logout = () => ({
+  type: "LOGOUT"
+});
 

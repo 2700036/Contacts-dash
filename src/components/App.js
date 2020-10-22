@@ -9,6 +9,7 @@ import Login from './Login';
 import Register from './Register';
 import InfoPopup from './InfoPopup';
 import { connect } from 'react-redux';
+import {login} from '../actions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,9 +17,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const App = () => {
+const App = ({loggedIn, login}) => {
   const classes = useStyles();
-  const [loggedIn, setLoggedIn] = useState(false);
+  
   const [userEmail, setUserEmail] = useState(null);
   const [infoPopupData, setInfoPopupData] = useState(false)
   const history = useHistory();
@@ -27,7 +28,7 @@ const App = () => {
   }
   const handleLogin = (email) => {
     setUserEmail(email);
-    setLoggedIn(true);    
+    login();    
   }
 
   const handleTokenCheck = () => {
@@ -47,9 +48,7 @@ const App = () => {
   return (
     <div className={classes.root}>
       <Header 
-      userEmail={userEmail}
-      setLoggedIn={setLoggedIn}
-      loggedIn={loggedIn}
+      userEmail={userEmail}      
       />      
       <Switch>
         <Route path='/signin'>
@@ -80,13 +79,13 @@ const App = () => {
   );
 };
 
-// const mapStateToProps = (state) => ({
-  
-// })
+const mapStateToProps = ({loggedIn}) => ({
+  loggedIn
+})
 
-// const mapDispatchToProps = {
-  
-// }
+const mapDispatchToProps = {
+  login 
+}
 
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
