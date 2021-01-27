@@ -16,6 +16,8 @@ import withProtectedRoute from './hocs/withProtectedRoute';
 import Dashboard from './Dashboard';
 import { contactsLoaded } from '../actions';
 import { connect } from 'react-redux';
+import TextRotationNoneIcon from '@material-ui/icons/TextRotationNone';
+import Parser from './Parser/Parser';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -66,6 +68,14 @@ const Main = ({contacts, setContacts}) => {
             <ListItemText >Контакты</ListItemText>
           </ListItem>
             </Link>
+            <Link to='/parser' className={classes.listItem}>
+          <ListItem button>
+            <ListItemIcon>
+              <TextRotationNoneIcon />
+            </ListItemIcon>
+            <ListItemText >Парсер</ListItemText>
+          </ListItem>
+            </Link>
         </List>
       </Drawer>
       <Route exact path="/">
@@ -76,6 +86,7 @@ const Main = ({contacts, setContacts}) => {
       contacts && <ContactsList />
       }
       </Route>
+      <Route path="/parser" component={Parser}/>
       
     </>
   );  
