@@ -73,7 +73,7 @@ const Main = ({contacts, setContacts}) => {
             <ListItemIcon>
               <TextRotationNoneIcon />
             </ListItemIcon>
-            <ListItemText >Парсер</ListItemText>
+            <ListItemText >Парсер сумм</ListItemText>
           </ListItem>
             </Link>
         </List>
